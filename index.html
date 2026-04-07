@@ -458,6 +458,55 @@ a, button, [role="button"] {
 .timeline-event { font-weight: 600; font-size: var(--text-base); }
 .timeline-note { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
 
+.schedule-summary {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3); flex-wrap: wrap; margin-bottom: var(--space-5);
+}
+.schedule-summary-text { font-size: var(--text-sm); color: var(--color-text-muted); }
+.schedule-callout {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-divider);
+  border-left: 3px solid var(--color-warning);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.schedule-callout-label {
+  font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-warning); font-weight: 700; margin-bottom: var(--space-1);
+}
+.schedule-callout-note { font-size: var(--text-sm); color: var(--color-text-muted); }
+.schedule-timeline .timeline-item { margin-bottom: var(--space-4); }
+.schedule-timeline .timeline-item:last-child { margin-bottom: 0; }
+.schedule-timeline .timeline-item.done .timeline-dot {
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px var(--color-success-dim);
+}
+.schedule-card {
+  width: 100%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex; align-items: flex-start; gap: var(--space-4);
+  text-align: left;
+}
+.schedule-card:hover { border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
+.schedule-card.done {
+  background: color-mix(in oklab, var(--color-success) 10%, var(--color-surface-2));
+  border-color: oklch(from var(--color-success) l c h / 0.22);
+}
+.schedule-main { flex: 1; min-width: 0; }
+.schedule-title { font-weight: 600; font-size: var(--text-base); color: var(--color-text); }
+.schedule-card.done .schedule-title { text-decoration: line-through; color: var(--color-text-muted); }
+.schedule-detail { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-1); }
+.schedule-responsible {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3);
+  padding: 4px var(--space-2); border-radius: var(--radius-full);
+  background: var(--color-surface-offset);
+}
+.schedule-card .check-box { margin-top: 0; }
 /* ====== STAFF PANEL ====== */
 .staff-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--space-4); }
 .staff-card {
@@ -517,6 +566,8 @@ a, button, [role="button"] {
 }
 
 /* ====== CHECKLIST ====== */
+.checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: var(--space-4); }
+.checklist-grid .card { margin-top: 0; }
 .checklist-item {
   display: flex; align-items: flex-start; gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
@@ -526,7 +577,7 @@ a, button, [role="button"] {
 }
 .checklist-item:last-child { border-bottom: none; }
 .checklist-item:hover { background: var(--color-surface-2); }
-.checklist-item.done { opacity: 0.55; }
+.checklist-item.done { opacity: 0.6; }
 .checklist-item.done .check-label { text-decoration: line-through; color: var(--color-text-muted); }
 .check-box {
   width: 20px; height: 20px; border-radius: var(--radius-sm);
@@ -536,8 +587,27 @@ a, button, [role="button"] {
   transition: all var(--transition);
 }
 .checklist-item.done .check-box { background: var(--color-success); border-color: var(--color-success); }
-.check-label { font-size: var(--text-sm); }
-
+.checklist-content { flex: 1; min-width: 0; }
+.checklist-topline {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-3); flex-wrap: wrap;
+}
+.check-label { font-size: var(--text-sm); font-weight: 500; color: var(--color-text); }
+.checklist-meta {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--color-primary); background: var(--color-primary-dim); border-radius: var(--radius-full);
+  padding: 4px var(--space-2);
+}
+.checklist-detail { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-1); line-height: 1.5; }
+.checklist-links { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.checklist-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+  color: var(--color-primary); background: var(--color-primary-dim);
+  border: 1px solid oklch(from var(--color-primary) l c h / 0.18);
+  border-radius: var(--radius-full); padding: 4px var(--space-2);
+}
+.checklist-link:hover { background: var(--color-primary); color: var(--color-text-inverse); }
 /* ====== EMPTY STATE ====== */
 .empty-state { text-align: center; padding: var(--space-12) var(--space-8); color: var(--color-text-muted); }
 .empty-state-icon { font-size: 48px; margin-bottom: var(--space-4); }
@@ -896,63 +966,34 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
     </div>
   </section>
 
-  <!-- ============ SCHEDULE ============ -->
+    <!-- ============ SCHEDULE ============ -->
   <section class="tab-panel" id="tab-schedule" role="tabpanel">
     <div class="section-header">
       <h2 class="section-title">Event <span>Schedule</span></h2>
+      <span style="font-size:var(--text-sm);color:var(--color-text-muted);">Completed: <strong id="schedule-count" style="color:var(--color-success);">0</strong> / <span id="schedule-total">0</span></span>
     </div>
 
     <div class="card">
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-dot key"></div>
-          <div class="timeline-time">2:00 PM</div>
-          <div class="timeline-event">Venue Setup & Staff Briefing</div>
-          <div class="timeline-note">All staff on-site. Final table arrangements, wine station ready.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-time">3:00 PM</div>
-          <div class="timeline-event">Kitchen Prep Confirmation</div>
-          <div class="timeline-note">Confirm hors d'oeuvres timing with kitchen. Walk-through with manager.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot key"></div>
-          <div class="timeline-time">3:45 PM</div>
-          <div class="timeline-event">Doors Open — Guest Arrival</div>
-          <div class="timeline-note">Check-in team at entrance. Welcome drinks served.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-time">4:00 PM</div>
-          <div class="timeline-event">Event Officially Begins</div>
-          <div class="timeline-note">Butler-passed hors d'oeuvres begin service.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-time">4:30 PM</div>
-          <div class="timeline-event">Amalfi Limoni Pasta Course</div>
-          <div class="timeline-note">Fettuccine with preserved Meyer lemon, lemon oil, crème fraîche.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-time">5:15 PM</div>
-          <div class="timeline-event">Dessert — Delizia al Limone</div>
-          <div class="timeline-note">Dessert service begins. Final toasts and remarks.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot key"></div>
-          <div class="timeline-time">6:00 PM</div>
-          <div class="timeline-event">Event Concludes</div>
-          <div class="timeline-note">Thank guests. Coordinate departure. Post-event wrap.</div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-time">6:30 PM</div>
-          <div class="timeline-event">Venue Breakdown</div>
-          <div class="timeline-note">Staff cleanup and sign-off.</div>
+      <div class="card-header">
+        <div class="card-header-icon">Run</div>
+        <div>
+          <div class="card-title">Minute-by-Minute Run of Show</div>
+          <div class="card-subtitle">Timeline view with live checkoffs for day-of execution</div>
         </div>
       </div>
+
+      <div class="schedule-summary">
+        <span class="schedule-summary-text">Track each live cue as it happens and keep the event team aligned in one place.</span>
+        <span style="font-size:var(--text-xs); color:var(--color-primary); font-weight:700;" id="schedule-progress-pct">0%</span>
+      </div>
+      <div class="progress-wrap" style="margin-bottom:var(--space-5);"><div class="progress-fill" id="schedule-progress-bar" style="width:0%"></div></div>
+
+      <div class="schedule-callout">
+        <div class="schedule-callout-label">Open Item</div>
+        <div class="schedule-callout-note">Define gift distribution timing and assign the owner before doors open.</div>
+      </div>
+
+      <div class="timeline schedule-timeline" id="schedule-timeline"></div>
     </div>
   </section>
 
@@ -986,24 +1027,42 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
     </div>
   </section>
 
-  <!-- ============ PRE-EVENT CHECKLIST ============ -->
+    <!-- ============ PRE-EVENT CHECKLIST ============ -->
   <section class="tab-panel" id="tab-checklist" role="tabpanel">
     <div class="section-header">
       <h2 class="section-title">Pre-Event <span>Checklist</span></h2>
       <span style="font-size:var(--text-sm);color:var(--color-text-muted);">Completed: <strong id="checklist-count" style="color:var(--color-success);">0</strong> / <span id="checklist-total">0</span></span>
     </div>
 
-    <div class="card">
-      <div class="card-header"><div class="card-header-icon">🏛️</div><div><div class="card-title">Venue & Setup</div></div></div>
-      <div id="checklist-venue"></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-header-icon">🍽️</div><div><div class="card-title">Food & Beverage</div></div></div>
-      <div id="checklist-fb"></div>
-    </div>
-    <div class="card">
-      <div class="card-header"><div class="card-header-icon">👥</div><div><div class="card-title">Guest & Communications</div></div></div>
-      <div id="checklist-guest"></div>
+    <div class="checklist-grid">
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">Buy</div><div><div class="card-title">Purchases & Tech</div><div class="card-subtitle">Procurement links and equipment prep from the master checklist</div></div></div>
+        <div id="checklist-purchase"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">Print</div><div><div class="card-title">Printed Materials</div><div class="card-subtitle">Items flagged for printing and guest-facing collateral</div></div></div>
+        <div id="checklist-print"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">Gift</div><div><div class="card-title">Gifting & Branding</div><div class="card-subtitle">Gift bags, branded items, and table setup</div></div></div>
+        <div id="checklist-gifting"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">Guests</div><div><div class="card-title">Guest Management</div><div class="card-subtitle">Guest list and RSVP readiness</div></div></div>
+        <div id="checklist-guest-mgmt"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">F&B</div><div><div class="card-title">F&B Coordination</div><div class="card-subtitle">Service confirmations before the event begins</div></div></div>
+        <div id="checklist-fb"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">Talk</div><div><div class="card-title">Presentation Details</div><div class="card-subtitle">Program flow, messaging, and speaker order</div></div></div>
+        <div id="checklist-presentation"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div class="card-header-icon">Photo</div><div><div class="card-title">Photographer / Videographer</div><div class="card-subtitle">Coverage plan, deliverables, and must-capture shots</div></div></div>
+        <div id="checklist-photo"></div>
+      </div>
     </div>
   </section>
 
@@ -1033,7 +1092,7 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
 (function(){
   const t = document.querySelector('[data-theme-toggle]');
   const r = document.documentElement;
-  let d = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  let d = 'light';
   r.setAttribute('data-theme', d);
   if (t) {
     t.innerHTML = d === 'dark'
@@ -1246,13 +1305,195 @@ document.getElementById('guest-search').addEventListener('input', e => {
   renderGuests();
 });
 
+const scheduleItems = [
+  { key: 'sched-01', time: '1:00 PM', title: 'Team arrival', detail: 'Core team arrives on site and begins setup handoff.', responsible: 'Andrea Baigorria, Lara Aldunate', milestone: true },
+  { key: 'sched-02', time: '1:00 PM', title: 'Setup with checklist', detail: 'Work through the venue setup checklist before vendors settle in.', responsible: 'Andrea Baigorria, Lara Aldunate' },
+  { key: 'sched-03', time: '1:00 PM', title: 'Sensory bags', detail: 'Place and confirm all sensory bags are staged correctly.' },
+  { key: 'sched-04', time: '1:00 PM', title: 'Gift placement', detail: 'Set olive oil, bergamot, and body scrub gifts in their assigned locations.' },
+  { key: 'sched-05', time: '1:00 PM', title: 'Printed menus and info cards', detail: 'Lay out printed menus and event info cards.' },
+  { key: 'sched-06', time: '1:00 PM', title: 'Music', detail: 'Confirm playlist, speakers, and volume levels for guest arrival.' },
+  { key: 'sched-07', time: '1:00 PM', title: 'Screen projector setup', detail: 'Set the screen and projector, then confirm presentation visibility.' },
+  { key: 'sched-08', time: '2:30 PM', title: 'Magna Graecia team arrival', detail: 'Main event team arrives for coordinated final checks.', milestone: true },
+  { key: 'sched-09', time: '2:30 PM', title: 'Photographer / videographer arrival', detail: 'Creative team checks in and receives coverage priorities.' },
+  { key: 'sched-10', time: '2:30 PM', title: 'Lighting check', detail: 'Validate light levels for media, photos, and presentations.' },
+  { key: 'sched-11', time: '2:30 PM', title: 'Mic and presentation tech test', detail: 'Run sound check plus the presentation tech test slot.' },
+  { key: 'sched-12', time: '2:50 PM', title: 'Magna Graecia team photo', detail: 'Reserve five minutes for the full team photo moment.', milestone: true },
+  { key: 'sched-13', time: '3:00 PM', title: 'Media arrival', detail: 'Welcome press and confirm their interview flow.', milestone: true },
+  { key: 'sched-14', time: '3:00 PM', title: 'Interviews', detail: 'Begin scheduled media interviews and short capture moments.' },
+  { key: 'sched-15', time: '3:00 PM', title: 'Photos taken', detail: 'Capture staged photos before guest arrival.' },
+  { key: 'sched-16', time: '4:00 PM', title: 'Guests arrival', detail: 'Doors open and guest check-in begins.', milestone: true },
+  { key: 'sched-17', time: '4:00 PM', title: 'Welcome reception by Magna Graecia team', detail: 'Host the first reception touchpoint and direct flow into the room.', responsible: 'Define owner' },
+  { key: 'sched-18', time: '4:00 PM', title: 'Guest photos taken', detail: 'Capture arrival and greeting photos.' },
+  { key: 'sched-19', time: '4:25 PM', title: 'Notify speakers', detail: 'Give speakers the five-minute warning before seating starts.' },
+  { key: 'sched-20', time: '4:25 PM', title: 'Test microphone', detail: 'Perform a final mic check immediately before the program starts.' },
+  { key: 'sched-21', time: '4:30 PM', title: 'Sit down', detail: 'Transition guests into seats and settle the room.', milestone: true },
+  { key: 'sched-22', time: '4:30 PM', title: 'Welcome speech', detail: 'Open the formal program and welcome attendees.', responsible: 'Laura Cimaglia' },
+  { key: 'sched-23', time: '4:30 PM', title: 'Introductions', detail: 'Introduce speakers and key event participants.', responsible: 'Laura Cimaglia' },
+  { key: 'sched-24', time: '4:30 PM', title: 'Presentation', detail: 'Run the main presentation segment.', responsible: 'Laura Cimaglia' },
+  { key: 'sched-25', time: '4:50 PM', title: 'Notify Donatella for 5:00 PM service', detail: 'Give the go-ahead so service begins on schedule.', responsible: 'Floor lead / Donatella' },
+  { key: 'sched-26', time: '5:00 PM', title: 'Culinary experience', detail: 'Begin the dining experience and coordinate room timing.', milestone: true },
+  { key: 'sched-27', time: '5:00 PM', title: 'Donatella service', detail: 'Venue service team begins the planned culinary flow.' },
+  { key: 'sched-28', time: '5:55 PM', title: 'Soft close moment', detail: 'Begin graceful wrap-up cues and final guest touchpoints.' },
+  { key: 'sched-29', time: '6:00 PM', title: 'End of event', detail: 'Official event close and guest departure flow.', milestone: true },
+  { key: 'sched-30', time: '6:10 PM', title: 'Retrieval of event materials', detail: 'Collect remaining materials, signage, and takeaway assets.' }
+];
+
+const scheduleStorageKey = 'magna-graecia-schedule-v1';
+const scheduleCheckIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+let scheduleState = {};
+
+try {
+  scheduleState = JSON.parse(localStorage.getItem(scheduleStorageKey) || '{}');
+} catch (error) {
+  scheduleState = {};
+}
+
+function persistScheduleState() {
+  try {
+    localStorage.setItem(scheduleStorageKey, JSON.stringify(scheduleState));
+  } catch (error) {
+    // Ignore storage issues and keep runtime tracking active.
+  }
+}
+
+function renderSchedule() {
+  const container = document.getElementById('schedule-timeline');
+  const doneCount = scheduleItems.filter(item => scheduleState[item.key]).length;
+  const total = scheduleItems.length;
+  const pct = Math.round((doneCount / total) * 100);
+
+  container.innerHTML = scheduleItems.map(item => {
+    const done = !!scheduleState[item.key];
+    return `
+      <div class="timeline-item ${done ? 'done' : ''}">
+        <div class="timeline-dot${item.milestone ? ' key' : ''}"></div>
+        <button type="button" class="schedule-card ${done ? 'done' : ''}" onclick="toggleSchedule('${item.key}')" aria-pressed="${done}">
+          <div class="schedule-main">
+            <div class="timeline-time">${item.time}</div>
+            <div class="schedule-title">${item.title}</div>
+            ${item.detail ? `<div class="schedule-detail">${item.detail}</div>` : ''}
+            ${item.responsible ? `<div class="schedule-responsible"><strong>Responsible:</strong> ${item.responsible}</div>` : ''}
+          </div>
+          <div class="check-box" style="${done ? 'background:var(--color-success);border-color:var(--color-success);' : ''}">${done ? scheduleCheckIcon : ''}</div>
+        </button>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('schedule-count').textContent = doneCount;
+  document.getElementById('schedule-total').textContent = total;
+  document.getElementById('schedule-progress-pct').textContent = pct + '%';
+  document.getElementById('schedule-progress-bar').style.width = pct + '%';
+}
+
+function toggleSchedule(key) {
+  scheduleState[key] = !scheduleState[key];
+  persistScheduleState();
+  renderSchedule();
+  const item = scheduleItems.find(entry => entry.key === key);
+  if (!item) return;
+  showToast(scheduleState[key] ? item.title + ' marked complete' : item.title + ' marked pending', scheduleState[key] ? 'success' : 'warning');
+}
 const guestTotal = guests.length;
 const checklistData = {
-  venue: ['Confirm venue layout and table arrangements','Test all A/V equipment','Check and set up check-in table with guest list','Confirm parking/valet arrangements','Signage and branding in place','Confirm venue access times with Donatella staff','Set up welcome drink station'],
-  fb: [`Confirm hors d'oeuvres quantities (${guestTotal} guests)`,'Confirm kitchen timing with Head Chef','Verify wine delivery � Cantele Chardonnay','Verify wine delivery � Mastroberardino Lacryma Christi','Check dietary restrictions list against final menu','Set up wine glass stations','Brief service staff on butler-passing sequence'],
-  guest: [`Send day-of confirmation to all ${guestTotal} guests`,'Print guest list backup (physical copy)','Brief check-in hosts with access procedures','Confirm priority guest preferences and seating','Prepare welcome packets / table cards','Photographer confirmed and briefed']
+  purchase: [
+    { label: 'Screen 60 inches', link: 'https://a.co/d/0eKjG1XP', linkLabel: 'Open link' },
+    { label: 'Projector', meta: 'Qty 1', link: 'https://a.co/d/09AjPE96', linkLabel: 'Open link' },
+    { label: 'Projector stand tripod', meta: 'Qty 1', link: 'https://a.co/d/0eMCcziZ', linkLabel: 'Open link' },
+    { label: 'Easels', meta: 'Qty 4', link: 'https://a.co/d/038BJdJ3', linkLabel: 'Open link' },
+    { label: 'Italian coffee beans', meta: 'Qty 4 bags', link: 'https://a.co/d/0isOzXKl', linkLabel: 'Open link' },
+    { label: 'Bergamot candies' },
+    { label: 'White fig scent', meta: 'Technical', link: 'https://a.co/d/0gsdoEqn', linkLabel: 'Open link' },
+    { label: 'Scented chalks', link: 'https://a.co/d/03c7e6RQ', linkLabel: 'Open link' },
+    { label: 'Screen 80 inches', detail: 'For Reggio Calabria.', link: 'https://a.co/d/043XVuU5', linkLabel: 'Open link' },
+    { label: 'Bolsas de arena y un mantel o tela', detail: 'Coordinate directly with Laura Cimaglia.', link: 'mailto:laura.cimaglia@port.taranto.it', linkLabel: 'Email Laura' },
+    { label: 'HDMI adapters for MAC or PC', link: 'https://a.co/d/0aYY5gkb', linkLabel: 'Open link' },
+    { label: 'Backup presentation on USB', detail: 'Keep a physical USB backup ready on site.', link: 'https://a.co/d/0fFwtoRS', linkLabel: 'Open link' },
+    { label: 'Speaker', link: 'https://a.co/d/04j87CEk', linkLabel: 'Open link' },
+    { label: 'Microphone', meta: 'Qty 2', link: 'https://a.co/d/08tDBh44', linkLabel: 'Open link' },
+    { label: 'Clicker', link: 'https://amzn.eu/d/08qAdOKm', linkLabel: 'Open link' },
+    { label: 'TV and stand (for entrance)', link: 'https://a.co/d/09WyuCwl', linkLabel: 'Open link' }
+  ],
+  print: [
+    { label: 'Printed Magna Graecia map (foam board)', detail: 'Need printing.' },
+    { label: 'Printed menus 5x7', detail: '"A taste of all three" / "On this journey taste the flavors of the south of Italy through a variety of dishes and wine." Need printing.' },
+    { label: 'Info about the 3 ports', detail: 'Title, info, and photos. Need printing.' },
+    { label: 'Sensory experience card', detail: '"In this bag you will smell the aroma of the freshly brewed coffee on the streets of Taranto." Need printing.' },
+    { label: 'Info letter for gift bags', detail: 'Need printing.' }
+  ],
+  gifting: [
+    { label: 'Tote bags and toiletry bags', meta: 'Qty 150', detail: 'Being sent to Miami.' },
+    { label: 'Olivobio hand cream gifts', meta: 'Qty 150' },
+    { label: 'Bergamot perfume', meta: 'Qty 150' },
+    { label: 'Ficoscrub', meta: 'Qty 150' },
+    { label: 'Pick up Graphis studio MG items' },
+    { label: 'Define gift distribution timing' },
+    { label: 'Small jewelry bag white', meta: 'Qty 50' },
+    { label: 'Small jewelry bag black', meta: 'Qty 300' },
+    { label: 'Table for gifts' }
+  ],
+  guest: [
+    { label: 'Updated RSVP list (final version printed)', done: true, detail: 'Marked as already prepared in the master checklist.' }
+  ],
+  fb: [
+    { label: 'Final wine confirmation' },
+    { label: 'Final menu confirmation' },
+    { label: 'Vegan options confirmation' },
+    { label: `Guest count aligned for service (${guestTotal} guests)` }
+  ],
+  presentation: [
+    { label: 'Review presentation slides / videos' },
+    { label: 'Clear 5-minute pitch messaging' },
+    { label: 'Who speaks and in what order' },
+    { label: 'Who follows up with whom after the event' }
+  ],
+  photo: [
+    { label: 'Booking' },
+    { label: 'Define deliverables' },
+    { label: 'Confirm delivery timeline' },
+    { label: 'Share shot list' },
+    { label: 'Provide must-capture guests list' },
+    { label: 'Share event brief?' },
+    { label: 'Photo moment strategy', detail: 'Who stands where.' },
+    { label: 'Capture welcome / registration moments' },
+    { label: 'Wide shots of the venue set-up' },
+    { label: 'Close-ups of branding', detail: 'Map, info cards, tote bags.' },
+    { label: 'Product shots', detail: 'Olive oil, bergamot, wine.' },
+    { label: 'Speakers during presentation' },
+    { label: 'Audience reaction shots' },
+    { label: 'Networking moments', detail: 'Cruise industry connections.' },
+    { label: 'Group photos with cruise executives' },
+    { label: 'Detail shots', detail: 'Menus, name tags, cocktails.' },
+    { label: 'Magna Graecia team shots' },
+    { label: 'Port of Taranto shots' },
+    { label: 'Port of Agropoli shots' },
+    { label: 'Port of Reggio Calabria shots' },
+    { label: 'Media interviews shots' },
+    { label: 'One strong image of the Magna Graecia presentation', detail: 'Audience engaged.' },
+    { label: 'Photo of key authorities together', detail: 'Important for press and credibility.' }
+  ]
 };
-let checklistState = {};
+
+const checklistStorageKey = 'magna-graecia-checklist-v2';
+const checklistCheckIcon = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>';
+const checklistDefaults = Object.fromEntries(
+  Object.entries(checklistData).flatMap(([category, items]) => items.map((item, index) => [`${category}-${index}`, !!item.done]))
+);
+let checklistState = { ...checklistDefaults };
+
+try {
+  checklistState = { ...checklistDefaults, ...(JSON.parse(localStorage.getItem(checklistStorageKey) || '{}')) };
+} catch (error) {
+  checklistState = { ...checklistDefaults };
+}
+
+function persistChecklistState() {
+  try {
+    localStorage.setItem(checklistStorageKey, JSON.stringify(checklistState));
+  } catch (error) {
+    // Ignore storage issues and keep runtime tracking active.
+  }
+}
 
 function renderChecklist(category, containerId) {
   const items = checklistData[category];
@@ -1260,20 +1501,31 @@ function renderChecklist(category, containerId) {
   container.innerHTML = items.map((item, i) => {
     const key = `${category}-${i}`;
     const done = checklistState[key] || false;
+    const links = [];
+    if (item.link) links.push({ href: item.link, label: item.linkLabel || 'Open link' });
+    if (item.link2) links.push({ href: item.link2, label: item.linkLabel2 || 'Open link' });
     return `<div class="checklist-item ${done ? 'done' : ''}" onclick="toggleChecklist('${key}', this)">
       <div class="check-box" style="${done ? 'background:var(--color-success);border-color:var(--color-success);' : ''}">
-        ${done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+        ${done ? checklistCheckIcon : ''}
       </div>
-      <span class="check-label">${item}</span>
+      <div class="checklist-content">
+        <div class="checklist-topline">
+          <span class="check-label">${item.label}</span>
+          ${item.meta ? `<span class="checklist-meta">${item.meta}</span>` : ''}
+        </div>
+        ${item.detail ? `<div class="checklist-detail">${item.detail}</div>` : ''}
+        ${links.length ? `<div class="checklist-links">${links.map(link => `<a class="checklist-link" href="${link.href}" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">${link.label}</a>`).join('')}</div>` : ''}
+      </div>
     </div>`;
   }).join('');
 }
 
 function toggleChecklist(key, el) {
   checklistState[key] = !checklistState[key];
+  persistChecklistState();
   const done = checklistState[key];
   el.classList.toggle('done', done);
-  el.querySelector('.check-box').innerHTML = done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '';
+  el.querySelector('.check-box').innerHTML = done ? checklistCheckIcon : '';
   el.querySelector('.check-box').style.background = done ? 'var(--color-success)' : '';
   el.querySelector('.check-box').style.borderColor = done ? 'var(--color-success)' : '';
   updateChecklistCount();
@@ -1286,9 +1538,15 @@ function updateChecklistCount() {
   document.getElementById('checklist-total').textContent = total;
 }
 
-renderChecklist('venue', 'checklist-venue');
+renderSchedule();
+
+renderChecklist('purchase', 'checklist-purchase');
+renderChecklist('print', 'checklist-print');
+renderChecklist('gifting', 'checklist-gifting');
+renderChecklist('guest', 'checklist-guest-mgmt');
 renderChecklist('fb', 'checklist-fb');
-renderChecklist('guest', 'checklist-guest');
+renderChecklist('presentation', 'checklist-presentation');
+renderChecklist('photo', 'checklist-photo');
 updateChecklistCount();
 
 function adjustCount(id, delta) {
