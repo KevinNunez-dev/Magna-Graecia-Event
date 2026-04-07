@@ -609,7 +609,7 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
     </div>
     <div class="topbar-badge">
       <span class="topbar-badge-label">Guests:</span>
-      <span class="topbar-badge-value" id="topbar-guest-count">0 / 50 checked in</span>
+      <span class="topbar-badge-value" id="topbar-guest-count">0 / 0 checked in</span>
     </div>
   </div>
 
@@ -630,7 +630,7 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
   </button>
   <button class="tab-btn" role="tab" aria-selected="false" data-tab="guests">
     <span class="tab-icon">🎟️</span> Guest List
-    <span class="tab-badge" id="tab-badge-guests">50</span>
+    <span class="tab-badge" id="tab-badge-guests">0</span>
   </button>
   <button class="tab-btn" role="tab" aria-selected="false" data-tab="menu">
     <span class="tab-icon">🍽️</span> Menu
@@ -665,10 +665,10 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
       <div class="kpi-card">
         <div class="kpi-num" id="kpi-checkedin">0</div>
         <div class="kpi-label">Checked In</div>
-        <div class="kpi-sub">of 50 guests</div>
+        <div class="kpi-sub">of <span id="overview-total-guests">0</span> guests</div>
       </div>
       <div class="kpi-card">
-        <div class="kpi-num" id="kpi-remaining">50</div>
+        <div class="kpi-num" id="kpi-remaining">0</div>
         <div class="kpi-label">Expected</div>
         <div class="kpi-sub">outstanding</div>
       </div>
@@ -711,7 +711,7 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
       </div>
       <div class="info-item">
         <div class="info-label">Total Guests</div>
-        <div class="info-value large accent">50</div>
+        <div class="info-value large accent" id="info-total-guests">0</div>
       </div>
       <div class="info-item">
         <div class="info-label">Event Type</div>
@@ -725,18 +725,17 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
     <div class="section-header">
       <h2 class="section-title"><span>Guest</span> Check-In</h2>
       <div style="display:flex; gap:var(--space-2);">
-        <span style="font-size:var(--text-sm); color:var(--color-text-muted);">Checked in: <strong id="checkedin-count" style="color:var(--color-success);">0</strong> / 50</span>
+        <span style="font-size:var(--text-sm); color:var(--color-text-muted);">Checked in: <strong id="checkedin-count" style="color:var(--color-success);">0</strong> / <span id="guest-checkin-total">0</span></span>
       </div>
     </div>
 
     <div class="search-bar">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" class="search-input" id="guest-search" placeholder="Search by name, company, or table…" autocomplete="off" aria-label="Search guests">
+      <input type="text" class="search-input" id="guest-search" placeholder="Search by name or company…" autocomplete="off" aria-label="Search guests">
     </div>
 
     <div class="guest-filters">
       <button class="filter-chip active" data-filter="all">All Guests</button>
-      <button class="filter-chip" data-filter="vip">VIP</button>
       <button class="filter-chip" data-filter="checked">Checked In</button>
       <button class="filter-chip" data-filter="pending">Pending</button>
     </div>
@@ -1064,56 +1063,120 @@ tabBtns.forEach(btn => {
 });
 
 const guests = [
-  {id:1,name:"Alexandra Rossi",company:"Tourism Lab",vip:true,checked:false},
-  {id:2,name:"Marco De Luca",company:"Magna Graecia Press",vip:false,checked:false},
-  {id:3,name:"Sofia Battaglia",company:"Italian Cultural Institute",vip:true,checked:false},
-  {id:4,name:"Giovanni Esposito",company:"Miami Italian Chamber",vip:false,checked:false},
-  {id:5,name:"Francesca Moretti",company:"Donatella Events",vip:false,checked:false},
-  {id:6,name:"Luca Ferrara",company:"Cantele Wines",vip:false,checked:false},
-  {id:7,name:"Isabella Conti",company:"Mastroberardino Estates",vip:true,checked:false},
-  {id:8,name:"Matteo Romano",company:"Italian Trade Agency",vip:false,checked:false},
-  {id:9,name:"Chiara Lombardi",company:"Miami Beach Hotels Assoc.",vip:false,checked:false},
-  {id:10,name:"Antonio Ricci",company:"Puglia Tourism Board",vip:true,checked:false},
-  {id:11,name:"Valentina Costa",company:"Campania Exports",vip:false,checked:false},
-  {id:12,name:"Roberto Gentile",company:"Italian Consulate Miami",vip:true,checked:false},
-  {id:13,name:"Elena Marino",company:"The Palm Hotel",vip:false,checked:false},
-  {id:14,name:"Davide Fontana",company:"South Beach Events",vip:false,checked:false},
-  {id:15,name:"Giulia Messina",company:"Design District Partner",vip:false,checked:false},
-  {id:16,name:"Carlo Martinelli",company:"Hospitality Today",vip:false,checked:false},
-  {id:17,name:"Serena Fiore",company:"Taste of Italy Network",vip:true,checked:false},
-  {id:18,name:"Lorenzo Gallo",company:"Food & Travel Media",vip:false,checked:false},
-  {id:19,name:"Bianca Pellegrini",company:"VIP Guest",vip:true,checked:false},
-  {id:20,name:"Stefano D'Angelo",company:"Mediterranean Imports",vip:false,checked:false},
-  {id:21,name:"Marta Rinaldi",company:"Luxury Travel Reporter",vip:false,checked:false},
-  {id:22,name:"Fabio Genovese",company:"Marriott International",vip:false,checked:false},
-  {id:23,name:"Lucia Carbone",company:"Italian American Club",vip:false,checked:false},
-  {id:24,name:"Emilio Benedetti",company:"Ritz-Carlton Coconut Grove",vip:true,checked:false},
-  {id:25,name:"Paola Venturi",company:"Cultural Affairs Miami",vip:false,checked:false},
-  {id:26,name:"Sergio Mancini",company:"Collins Ave. Partners",vip:false,checked:false},
-  {id:27,name:"Diana Amato",company:"Naples-Miami Exchange",vip:false,checked:false},
-  {id:28,name:"Nicola Palermo",company:"Sicily Heritage Foundation",vip:false,checked:false},
-  {id:29,name:"Margherita Longo",company:"Il Sole Press",vip:false,checked:false},
-  {id:30,name:"Daniele Fabbri",company:"Private Guest",vip:false,checked:false},
-  {id:31,name:"Alessandra Valenti",company:"Fashion Week Miami",vip:true,checked:false},
-  {id:32,name:"Pietro Neri",company:"Architecture & Design Mag.",vip:false,checked:false},
-  {id:33,name:"Francesca Bruno",company:"Art Basel Partner",vip:false,checked:false},
-  {id:34,name:"Gianluigi Serra",company:"Michelin Guide",vip:true,checked:false},
-  {id:35,name:"Carmen Forte",company:"VISIT Florida",vip:false,checked:false},
-  {id:36,name:"Raffaele Testa",company:"Sorrento Tourism",vip:false,checked:false},
-  {id:37,name:"Agnese Parisi",company:"Saveur Magazine",vip:false,checked:false},
-  {id:38,name:"Stefano Grasso",company:"Private Guest",vip:false,checked:false},
-  {id:39,name:"Maria Santoro",company:"Enoteca Italiana",vip:false,checked:false},
-  {id:40,name:"Vincenzo De Rosa",company:"Confagricoltura",vip:false,checked:false},
-  {id:41,name:"Natasha Rizzo",company:"Miami New Times Food Ed.",vip:false,checked:false},
-  {id:42,name:"Carlo Vitale",company:"Private Guest",vip:true,checked:false},
-  {id:43,name:"Simona Belli",company:"Italian Wine Academy",vip:false,checked:false},
-  {id:44,name:"Gianluca Pinto",company:"Mediterranean Markets",vip:false,checked:false},
-  {id:45,name:"Rosa Bernardi",company:"Campania Cultural Assoc.",vip:false,checked:false},
-  {id:46,name:"Alfredo Montanari",company:"Private Guest",vip:false,checked:false},
-  {id:47,name:"Laura Grassi",company:"Slow Food Miami",vip:false,checked:false},
-  {id:48,name:"Gianluca Ferrari",company:"Italian Cuisine Foundation",vip:false,checked:false},
-  {id:49,name:"Elisa De Martino",company:"Tourism Lab Staff",vip:false,checked:false},
-  {id:50,name:"Massimo Lupo",company:"Organizer — Magna Graecia",vip:true,checked:false},
+  {id:1,name:"Erich Graf",company:"Albatros Expeditions / Polar Latitudes",checked:false},
+  {id:2,name:"John Mckeon",company:"Albatros Expeditions / Polar Latitudes",checked:false},
+  {id:3,name:"Sergi Font Manzano",company:"Amangati Cruise Line",checked:false},
+  {id:4,name:"Jinita Thakker",company:"Aman at Sea",checked:false},
+  {id:5,name:"Laura Vlad",company:"Aman at Sea",checked:false},
+  {id:7,name:"Michael Pawlus",company:"Azamara",checked:false},
+  {id:8,name:"Maudrid Urdaneta",company:"Azamara",checked:false},
+  {id:9,name:"Shandra",company:"Azamara",checked:false},
+  {id:10,name:"Gianluca Canepa",company:"AIDA",checked:false},
+  {id:11,name:"Ugo Savino",company:"Carnival Holding",checked:false},
+  {id:12,name:"Jack Brooke",company:"Carnival UK Group",checked:false},
+  {id:14,name:"Daniele Chiappa",company:"Crystal Cruises",checked:false},
+  {id:15,name:"Vincenzo Pacile",company:"Crystal Cruises",checked:false},
+  {id:16,name:"Adria Bono, Director Destination Experience",company:"Crystal Cruises",checked:false},
+  {id:17,name:"Simone Maraschi",company:"Cruise Gate Hamburg",checked:false},
+  {id:18,name:"Barbara Buczek",company:"Cruise Saudi",checked:false},
+  {id:19,name:"Francesco Di Palma",company:"Explora Journeys (MSC Group)",checked:false},
+  {id:20,name:"Catello Miniero",company:"MSC Cruises",checked:false},
+  {id:21,name:"Sabrina Gaggia",company:"Four Seasons Yachts",checked:false},
+  {id:22,name:"Francesco Rossiello",company:"Four Seasons Yachts",checked:false},
+  {id:23,name:"James Cabello",company:"Four Seasons Yachts",checked:false},
+  {id:24,name:"Mariana Elejalde",company:"Four Seasons Yachts",checked:false},
+  {id:25,name:"Michael Koster",company:"Four Seasons Yachts",checked:false},
+  {id:26,name:"Dawn Pender",company:"Four Seasons Yachts",checked:false},
+  {id:27,name:"Srdan Preljevic",company:"Grand Circle Cruise Line / OAT Travel",checked:false},
+  {id:28,name:"Gerry Larsson-Fedde",company:"Hurtigruten Expeditions",checked:false},
+  {id:30,name:"Paul Mildon",company:"Noble Caledonia",checked:false},
+  {id:31,name:"Matthew Weintraub",company:"Norwegian Cruise Line",checked:false},
+  {id:32,name:"Sandi Weir",company:"Regent Cruises",checked:false},
+  {id:33,name:"Brian Gilroy",company:"Oceania Cruises",checked:false},
+  {id:35,name:"Sylviane De Tracy",company:"Ponant",checked:false},
+  {id:36,name:"German Amaya, Deployment & Itinerary Planning",company:"Ponant",checked:false},
+  {id:37,name:"Yann Couessurel",company:"Ponant",checked:false},
+  {id:38,name:"Debbie Holbrook",company:"Princess Cruises",checked:false},
+  {id:39,name:"Kyle Dunst",company:"Princess Cruises",checked:false},
+  {id:40,name:"Felix Nacken, Product Management & Itinerary Planning Manager",company:"Phoenix Reisen",checked:false},
+  {id:41,name:"Rose Serim",company:"RCCL Group",checked:false},
+  {id:42,name:"Alessandro Carollo",company:"RCCL Group",checked:false},
+  {id:43,name:"Nicole Rosso",company:"RCCL Group",checked:false},
+  {id:44,name:"Tuula Aer, Head of Marine Standards",company:"Saga Cruises",checked:false},
+  {id:45,name:"Ana BalHanas",company:"Scenic Cruises",checked:false},
+  {id:46,name:"Cathrin Meyer",company:"Sea Cloud Cruises",checked:false},
+  {id:47,name:"Crystal Morgan",company:"Seabourn Cruise Line",checked:false},
+  {id:48,name:"Jeff Shieh, Manager Deployment and Planning",company:"Seabourn Cruise Line",checked:false},
+  {id:49,name:"Emilio Freeman",company:"SeaDream Yacht Club",checked:false},
+  {id:50,name:"Marilisa Giannessi",company:"Silversea Cruises",checked:false},
+  {id:51,name:"Andrea Ferla",company:"Silversea Cruises",checked:false},
+  {id:52,name:"Serena Colluto",company:"Silversea Cruises",checked:false},
+  {id:53,name:"Marco Lazzari",company:"Star Clippers",checked:false},
+  {id:54,name:"Tyler Parker",company:"The Ritz-Carlton Yacht Collection",checked:false},
+  {id:55,name:"Daniela Sordi",company:"The Ritz-Carlton Yacht Collection",checked:false},
+  {id:56,name:"Antoine Zoppi",company:"The Ritz-Carlton Yacht Collection",checked:false},
+  {id:57,name:"Spyros Almpertis",company:"The Ritz-Carlton Yacht Collection",checked:false},
+  {id:58,name:"Otto van der Westhuizen",company:"The World",checked:false},
+  {id:59,name:"Panos Thermogiannis",company:"Variety Cruises",checked:false},
+  {id:60,name:"Stefano Torresi",company:"Viking Ocean Cruises",checked:false},
+  {id:61,name:"Natalia De Freitas",company:"Windstar Cruises",checked:false},
+  {id:62,name:"Alex Zeitz",company:"Windstar Cruises",checked:false},
+  {id:63,name:"Jamie Holmes",company:"Virgin Voyages",checked:false},
+  {id:64,name:"Melissa Witsoe",company:"Windstar Cruises",checked:false},
+  {id:65,name:"Paul Chapple",company:"Windstar Cruises",checked:false},
+  {id:66,name:"Janet Brava",company:"Windstar Cruises",checked:false},
+  {id:67,name:"Luigi Bava (Janet Brava's +1)",company:"Windstar Cruises Guest",checked:false},
+  {id:68,name:"Patricia Gonzalez",company:"Windstar Cruises",checked:false},
+  {id:69,name:"Juan Kuryla",company:"NCL Holding",checked:false},
+  {id:70,name:"Hans Lind, Director Itinerary Planning",company:"NCL Holding",checked:false},
+  {id:71,name:"Philippe Mercet",company:"Club Med",checked:false},
+  {id:72,name:"Saida Dridi",company:"Club Med",checked:false},
+  {id:73,name:"Jean-Charles Thillays, Cruise Director",company:"Club Med",checked:false},
+  {id:74,name:"Theodora Riga",company:"MedCruise",checked:false},
+  {id:75,name:"Nicky Guerrero",company:"MedCruise",checked:false},
+  {id:76,name:"Anne Marie Spinosi",company:"MedCruise",checked:false},
+  {id:77,name:"Lasse Roebers",company:"HX Expeditions",checked:false},
+  {id:78,name:"Andrea Baigorria",company:"The Tourism Lab",checked:false},
+  {id:79,name:"Lara Aldunate",company:"The Tourism Lab",checked:false},
+  {id:80,name:"Shannon McKee",company:"Access Cruise",checked:false},
+  {id:81,name:"Roger Blum",company:"Cruise and Port Advisors",checked:false},
+  {id:82,name:"Mary Bond",company:"Seatrade Cruise News",checked:false},
+  {id:83,name:"Holly Payne",company:"Seatrade Cruise News",checked:false},
+  {id:84,name:"Chiara Giorgi",company:"Seatrade Cruise News",checked:false},
+  {id:85,name:"Sarah Dandashy",company:"Ask A Concierge",checked:false},
+  {id:86,name:"Virginia Lopez Valiente",company:"Cruises News",checked:false},
+  {id:87,name:"Cristina Lopez",company:"Cruises News",checked:false},
+  {id:88,name:"Frances Gannon",company:"Cruise Times",checked:false},
+  {id:89,name:"Kieran Gannon",company:"Cruise Times",checked:false},
+  {id:90,name:"Janette Reddel",company:"Medov",checked:false},
+  {id:91,name:"Barbara Carabetti",company:"Cemar / Discover",checked:false},
+  {id:92,name:"Sergio Senesi",company:"Cemar",checked:false},
+  {id:93,name:"Ivan Morini",company:"Trumpy",checked:false},
+  {id:94,name:"Eugenio K",company:"Trumpy",checked:false},
+  {id:95,name:"Johannes Kielland",company:"Trumpy",checked:false},
+  {id:96,name:"Stefano Iannelli",company:"Trumpy",checked:false},
+  {id:97,name:"Antonio Aloschi",company:"Aloschi Bros",checked:false},
+  {id:98,name:"Francesco Olivetti",company:"Bassani Group",checked:false},
+  {id:99,name:"Anna Rita Secchi",company:"Deputy Minister of Infrastructures and Transport",checked:false},
+  {id:100,name:"Maria Francesca Amoruso",company:"Ministry of Infrastructures and Transport",checked:false},
+  {id:101,name:"Giuseppe Amoruso",company:"Minister of Infrastructures and Transport",checked:false},
+  {id:102,name:"Giovanni Gugliotti",company:"Ministry of Infrastructures and Transport",checked:false},
+  {id:103,name:"Laura Cimaglia",company:"Ministry of Infrastructures and Transport",checked:false},
+  {id:104,name:"Camilla Cimaglia",company:"Ministry of Infrastructures and Transport",checked:false},
+  {id:105,name:"Camilla Cavallaro",company:"President of the Ports of Naples and Salerno",checked:false},
+  {id:106,name:"Noemi Frascella",company:"Ports of Naples and Salerno",checked:false},
+  {id:107,name:"Cristiana Laura",company:"Government Guest",checked:false},
+  {id:108,name:"Giuseppe di Filippo",company:"Global Ports Holding",checked:false},
+  {id:109,name:"Giuseppe di Filippo +1",company:"Global Ports Holding",checked:false},
+  {id:110,name:"Edoardo Rixi",company:"Ministry of Infrastructures and Transport",checked:false},
+  {id:111,name:"Senator Salvini Matteo",company:"Government Guest",checked:false},
+  {id:112,name:"Donato Liguori",company:"Ministry of Infrastructures and Transport",checked:false},
+  {id:113,name:"Eliseo Cuccaro",company:"Guest",checked:false},
+  {id:114,name:"Raffaella Del Prete",company:"Global Ports Holding",checked:false},
+  {id:115,name:"Stephen Xuereb",company:"Global Ports Holding",checked:false},
+  {id:116,name:"Kerem Seckin",company:"Global Ports Holding",checked:false},
+  {id:117,name:"Luigi Derchi",company:"Medov",checked:false},
+  {id:118,name:"Chiara Cesarini",company:"Medov",checked:false},
 ];
 
 let activeFilter = 'all';
@@ -1121,32 +1184,29 @@ let searchQuery = '';
 
 function renderGuests() {
   const tbody = document.getElementById('guest-tbody');
+  const total = guests.length;
   let filtered = guests.filter(g => {
     const matchSearch = !searchQuery || g.name.toLowerCase().includes(searchQuery) || g.company.toLowerCase().includes(searchQuery);
     let matchFilter = true;
-    if (activeFilter === 'vip') matchFilter = g.vip;
     if (activeFilter === 'checked') matchFilter = g.checked;
     if (activeFilter === 'pending') matchFilter = !g.checked;
     return matchSearch && matchFilter;
   });
   if (filtered.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">🔍</div><h3>No guests found</h3><p>Try a different search or filter.</p></div></td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-state-icon">Search</div><h3>No guests found</h3><p>Try a different search or filter.</p></div></td></tr>';
     return;
   }
   tbody.innerHTML = filtered.map(g => `
     <tr class="${g.checked ? 'checked-in' : ''}" data-id="${g.id}">
       <td><span class="guest-num">${g.id}</span></td>
       <td><div class="guest-name">${g.name}</div></td>
-      <td>
-        <div class="guest-detail">${g.company}</div>
-        ${g.vip ? '<span class="status-badge badge-vip" style="margin-top:4px;display:inline-flex;">★ VIP</span>' : ''}
-      </td>
-      <td><span class="status-badge ${g.checked ? 'badge-checked' : 'badge-pending'}">${g.checked ? '✓ In' : '○ Pending'}</span></td>
-      <td><button class="btn-checkin ${g.checked ? 'done' : ''}" onclick="toggleCheckin(${g.id})" aria-label="${g.checked ? 'Undo' : 'Check in'} ${g.name}">${g.checked ? '✓ Checked In' : 'Check In →'}</button></td>
+      <td><div class="guest-detail">${g.company || 'Guest'}</div></td>
+      <td><span class="status-badge ${g.checked ? 'badge-checked' : 'badge-pending'}">${g.checked ? 'In' : 'Pending'}</span></td>
+      <td><button class="btn-checkin ${g.checked ? 'done' : ''}" onclick="toggleCheckin(${g.id})" aria-label="${g.checked ? 'Undo' : 'Check in'} ${g.name}">${g.checked ? 'Checked In' : 'Check In ->'}</button></td>
     </tr>
   `).join('');
+  document.getElementById('tab-badge-guests').textContent = total;
 }
-
 function toggleCheckin(id) {
   const g = guests.find(x => x.id === id);
   if (!g) return;
@@ -1162,10 +1222,14 @@ function updateKPIs() {
   const pct = Math.round((count / total) * 100);
   document.getElementById('kpi-checkedin').textContent = count;
   document.getElementById('kpi-remaining').textContent = total - count;
+  document.getElementById('overview-total-guests').textContent = total;
+  document.getElementById('info-total-guests').textContent = total;
+  document.getElementById('guest-checkin-total').textContent = total;
   document.getElementById('progress-bar').style.width = pct + '%';
   document.getElementById('progress-pct').textContent = pct + '%';
   document.getElementById('checkedin-count').textContent = count;
   document.getElementById('topbar-guest-count').textContent = count + ' / ' + total + ' checked in';
+  document.getElementById('tab-badge-guests').textContent = total;
 }
 
 document.querySelectorAll('.filter-chip').forEach(chip => {
@@ -1182,10 +1246,11 @@ document.getElementById('guest-search').addEventListener('input', e => {
   renderGuests();
 });
 
+const guestTotal = guests.length;
 const checklistData = {
   venue: ['Confirm venue layout and table arrangements','Test all A/V equipment','Check and set up check-in table with guest list','Confirm parking/valet arrangements','Signage and branding in place','Confirm venue access times with Donatella staff','Set up welcome drink station'],
-  fb: ['Confirm kitchen timing with Head Chef','Verify wine delivery — Cantele Chardonnay','Verify wine delivery — Mastroberardino Lacryma Christi','Confirm hors d\'oeuvres quantities (50 guests)','Check dietary restrictions list against final menu','Set up wine glass stations','Brief service staff on butler-passing sequence'],
-  guest: ['Send day-of confirmation to all 50 guests','Print guest list backup (physical copy)','Brief check-in hosts with access procedures','Confirm VIP guest preferences and seating','Prepare welcome packets / table cards','Photographer confirmed and briefed']
+  fb: [`Confirm hors d'oeuvres quantities (${guestTotal} guests)`,'Confirm kitchen timing with Head Chef','Verify wine delivery � Cantele Chardonnay','Verify wine delivery � Mastroberardino Lacryma Christi','Check dietary restrictions list against final menu','Set up wine glass stations','Brief service staff on butler-passing sequence'],
+  guest: [`Send day-of confirmation to all ${guestTotal} guests`,'Print guest list backup (physical copy)','Brief check-in hosts with access procedures','Confirm priority guest preferences and seating','Prepare welcome packets / table cards','Photographer confirmed and briefed']
 };
 let checklistState = {};
 
@@ -1253,3 +1318,5 @@ updateKPIs();
 </script>
 </body>
 </html>
+
+
