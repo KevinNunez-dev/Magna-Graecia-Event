@@ -526,7 +526,51 @@ a, button, [role="button"] {
 .staff-name { font-weight: 600; font-size: var(--text-sm); }
 .staff-role { font-size: var(--text-xs); color: var(--color-primary); margin-top: 1px; }
 .staff-contact { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-2); }
-
+.staff-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-3);
+}
+.field-group { display: flex; flex-direction: column; gap: var(--space-2); }
+.field-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+.field-input {
+  width: 100%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-divider);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.field-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px var(--color-primary-dim); }
+.staff-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+.staff-remove {
+  padding: 4px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-divider);
+  background: var(--color-surface-offset);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.staff-remove:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
 /* ====== NOTES PANEL ====== */
 .notes-textarea {
   width: 100%; min-height: 160px;
@@ -1003,13 +1047,37 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
       <h2 class="section-title">Staff & <span>Contacts</span></h2>
     </div>
 
-    <div class="staff-grid">
-      <div class="staff-card"><div class="staff-avatar">👩‍💼</div><div class="staff-name">Event Manager</div><div class="staff-role">Lead Coordinator</div><div class="staff-contact">Donatella Restaurant</div></div>
-      <div class="staff-card"><div class="staff-avatar">🎩</div><div class="staff-name">Head Butler</div><div class="staff-role">Butler & Passed Service Lead</div><div class="staff-contact">Floor Operations</div></div>
-      <div class="staff-card"><div class="staff-avatar">🍷</div><div class="staff-name">Sommelier</div><div class="staff-role">Wine Service</div><div class="staff-contact">Cantele · Mastroberardino</div></div>
-      <div class="staff-card"><div class="staff-avatar">👨‍🍳</div><div class="staff-name">Executive Chef</div><div class="staff-role">Kitchen Lead</div><div class="staff-contact">Amalfi Limoni · Desserts</div></div>
-      <div class="staff-card"><div class="staff-avatar">🎟️</div><div class="staff-name">Check-In Host</div><div class="staff-role">Guest Entry & Verification</div><div class="staff-contact">Front Entrance</div></div>
-      <div class="staff-card"><div class="staff-avatar">📸</div><div class="staff-name">Photographer</div><div class="staff-role">Event Documentation</div><div class="staff-contact">Full Duration</div></div>
+        <div class="staff-grid" id="staff-grid"></div>
+
+    <div class="card" style="margin-top:var(--space-5);">
+      <div class="card-header">
+        <div class="card-header-icon">Add</div>
+        <div><div class="card-title">Add Staff / Contact</div><div class="card-subtitle">Create extra team cards that appear in the staff grid above</div></div>
+      </div>
+      <div class="staff-form">
+        <div class="field-group">
+          <label class="field-label" for="staff-name-input">Name</label>
+          <input class="field-input" id="staff-name-input" type="text" placeholder="e.g. Maria Rossi">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="staff-role-input">Role</label>
+          <input class="field-input" id="staff-role-input" type="text" placeholder="e.g. Guest Relations Lead">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="staff-contact-input">Contact / Location</label>
+          <input class="field-input" id="staff-contact-input" type="text" placeholder="Phone, email, or location">
+        </div>
+        <div class="field-group">
+          <label class="field-label" for="staff-avatar-input">Badge</label>
+          <input class="field-input" id="staff-avatar-input" type="text" maxlength="6" placeholder="e.g. Ops">
+        </div>
+      </div>
+      <div style="margin-top:var(--space-4);">
+        <button class="btn-primary" onclick="addStaffMember()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Add Staff Card
+        </button>
+      </div>
     </div>
 
     <div class="card" style="margin-top:var(--space-5);">
@@ -1394,6 +1462,127 @@ function toggleSchedule(key) {
   if (!item) return;
   showToast(scheduleState[key] ? item.title + ' marked complete' : item.title + ' marked pending', scheduleState[key] ? 'success' : 'warning');
 }
+const defaultStaffMembers = [
+  { avatar: 'Lead', name: 'Event Manager', role: 'Lead Coordinator', contact: 'Donatella Restaurant' },
+  { avatar: 'Butlr', name: 'Head Butler', role: 'Butler & Passed Service Lead', contact: 'Floor Operations' },
+  { avatar: 'Wine', name: 'Sommelier', role: 'Wine Service', contact: 'Cantele / Mastroberardino' },
+  { avatar: 'Chef', name: 'Executive Chef', role: 'Kitchen Lead', contact: 'Amalfi Limoni / Desserts' },
+  { avatar: 'Desk', name: 'Check-In Host', role: 'Guest Entry & Verification', contact: 'Front Entrance' },
+  { avatar: 'Photo', name: 'Photographer', role: 'Event Documentation', contact: 'Full Duration' }
+];
+const staffStorageKey = 'magna-graecia-staff-v1';
+const notesStorageKey = 'magna-graecia-notes-v1';
+let customStaffMembers = [];
+let savedNotes = {};
+
+try {
+  customStaffMembers = JSON.parse(localStorage.getItem(staffStorageKey) || '[]');
+  if (!Array.isArray(customStaffMembers)) customStaffMembers = [];
+} catch (error) {
+  customStaffMembers = [];
+}
+
+try {
+  savedNotes = JSON.parse(localStorage.getItem(notesStorageKey) || '{}');
+  if (!savedNotes || typeof savedNotes !== 'object') savedNotes = {};
+} catch (error) {
+  savedNotes = {};
+}
+
+function persistStaffMembers() {
+  try {
+    localStorage.setItem(staffStorageKey, JSON.stringify(customStaffMembers));
+  } catch (error) {
+    // Ignore storage issues and keep runtime editing active.
+  }
+}
+
+function persistNotes() {
+  try {
+    localStorage.setItem(notesStorageKey, JSON.stringify(savedNotes));
+  } catch (error) {
+    // Ignore storage issues and keep runtime editing active.
+  }
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function renderStaffMembers() {
+  const grid = document.getElementById('staff-grid');
+  if (!grid) return;
+
+  const defaultCards = defaultStaffMembers.map(member => `
+    <div class="staff-card">
+      <div class="staff-avatar">${escapeHtml(member.avatar)}</div>
+      <div class="staff-name">${escapeHtml(member.name)}</div>
+      <div class="staff-role">${escapeHtml(member.role)}</div>
+      <div class="staff-contact">${escapeHtml(member.contact)}</div>
+    </div>
+  `);
+
+  const customCards = customStaffMembers.map((member, index) => `
+    <div class="staff-card">
+      <div class="staff-card-head">
+        <div class="staff-avatar">${escapeHtml(member.avatar || 'Team')}</div>
+        <button type="button" class="staff-remove" onclick="removeStaffMember(${index}); event.stopPropagation();">Remove</button>
+      </div>
+      <div class="staff-name">${escapeHtml(member.name)}</div>
+      <div class="staff-role">${escapeHtml(member.role)}</div>
+      <div class="staff-contact">${escapeHtml(member.contact)}</div>
+    </div>
+  `);
+
+  grid.innerHTML = defaultCards.concat(customCards).join('');
+}
+
+function addStaffMember() {
+  const nameEl = document.getElementById('staff-name-input');
+  const roleEl = document.getElementById('staff-role-input');
+  const contactEl = document.getElementById('staff-contact-input');
+  const avatarEl = document.getElementById('staff-avatar-input');
+  const name = nameEl.value.trim();
+  const role = roleEl.value.trim();
+  const contact = contactEl.value.trim();
+  const avatar = avatarEl.value.trim() || 'Team';
+
+  if (!name || !role || !contact) {
+    showToast('Add a name, role, and contact before saving.', 'warning');
+    return;
+  }
+
+  customStaffMembers.push({ name, role, contact, avatar });
+  persistStaffMembers();
+  renderStaffMembers();
+
+  nameEl.value = '';
+  roleEl.value = '';
+  contactEl.value = '';
+  avatarEl.value = '';
+
+  showToast(name + ' added to staff.', 'success');
+}
+
+function removeStaffMember(index) {
+  if (index < 0 || index >= customStaffMembers.length) return;
+  const removed = customStaffMembers.splice(index, 1)[0];
+  persistStaffMembers();
+  renderStaffMembers();
+  showToast((removed && removed.name ? removed.name : 'Staff card') + ' removed.', 'warning');
+}
+
+function hydrateNotes() {
+  ['dietary-notes', 'staff-notes', 'general-notes', 'debrief-notes'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el && typeof savedNotes[id] === 'string') el.value = savedNotes[id];
+  });
+}
 const guestTotal = guests.length;
 const checklistData = {
   purchase: [
@@ -1569,8 +1758,16 @@ function showToast(msg, type = 'info') {
   }, 3000);
 }
 
-function saveNote(id, msg) { showToast(msg, 'success'); }
+function saveNote(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  savedNotes[id] = el.value;
+  persistNotes();
+  showToast(msg, 'success');
+}
 
+hydrateNotes();
+renderStaffMembers();
 renderGuests();
 updateKPIs();
 </script>
