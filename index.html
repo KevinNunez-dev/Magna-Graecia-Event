@@ -284,6 +284,12 @@ a, button, [role="button"] {
 .info-value { font-size: var(--text-base); font-weight: 600; color: var(--color-text); line-height: 1.4; }
 .info-value.accent { color: var(--color-primary); }
 .info-value.large { font-size: var(--text-xl); }
+.contact-link {
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 0.14em;
+}
+.contact-link:hover { color: var(--color-primary-hover); }
 
 /* ====== KPI STRIP ====== */
 .kpi-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
@@ -870,6 +876,69 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
       <div class="info-item">
         <div class="info-label">Event Type</div>
         <div class="info-value">Private Dining Experience</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: var(--space-5);">
+      <div class="card-header">
+        <div class="card-header-icon">Core</div>
+        <div>
+          <div class="card-title">Core Team & Decision Makers</div>
+          <div class="card-subtitle">Primary contacts for Tourism Lab and port leadership</div>
+        </div>
+      </div>
+      <div class="guest-table-wrap">
+        <table class="guest-table" aria-label="Core Team and Decision Makers">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="guest-name">Andrea Baigorria</div></td>
+              <td><div class="guest-detail">The Tourism Lab</div></td>
+              <td><a class="contact-link" href="mailto:andrea@thetourismlab.com">andrea@thetourismlab.com</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Gabriel Pinto</div></td>
+              <td><div class="guest-detail">The Tourism Lab</div></td>
+              <td><a class="contact-link" href="mailto:gabriel@thetourismlab.com">gabriel@thetourismlab.com</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Lara Aldunate</div></td>
+              <td><div class="guest-detail">The Tourism Lab</div></td>
+              <td><a class="contact-link" href="mailto:lara@thetourismlab.com">lara@thetourismlab.com</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Laura Cimaglia</div></td>
+              <td><div class="guest-detail">Port of Taranto</div></td>
+              <td><a class="contact-link" href="mailto:laura.cimaglia@port.taranto.it">laura.cimaglia@port.taranto.it</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Cristina Carriere</div></td>
+              <td><div class="guest-detail">Port of Taranto</div></td>
+              <td><a class="contact-link" href="mailto:cristina.carriere@port.taranto.it">cristina.carriere@port.taranto.it</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Maria Cristiana Laura</div></td>
+              <td><div class="guest-detail">Port of Messina/Reggio Calabria</div></td>
+              <td><a class="contact-link" href="mailto:mariacristiana.laura@adspsretto.it">mariacristiana.laura@adspsretto.it</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Francesca Amoruso</div></td>
+              <td><div class="guest-detail">Port of Agropoli/Salerno</div></td>
+              <td><a class="contact-link" href="mailto:f.amoruso@amalficruiseterminal.com">f.amoruso@amalficruiseterminal.com</a></td>
+            </tr>
+            <tr>
+              <td><div class="guest-name">Anna Rita Secchi</div></td>
+              <td><div class="guest-detail">Port of Agropoli/Salerno</div></td>
+              <td><a class="contact-link" href="mailto:ar.secchi@amalficruiseterminal.com">ar.secchi@amalficruiseterminal.com</a></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
