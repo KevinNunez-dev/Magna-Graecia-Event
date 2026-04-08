@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
@@ -1095,7 +1095,7 @@ hr { border: none; border-top: 1px solid var(--color-divider); margin: var(--spa
     <div class="guest-filters">
       <button class="filter-chip active" data-filter="all">All Guests</button>
       <button class="filter-chip" data-filter="checked">Checked In</button>
-      <button class="filter-chip" data-filter="pending">Pending</button>
+      <button class="filter-chip" data-filter="confirmed">Confirmed</button>
     </div>
 
     <div class="guest-table-wrap">
@@ -1434,125 +1434,10 @@ tabBtns.forEach(btn => {
   });
 });
 
-const guests = [
-  {id:1,name:"Erich Graf",company:"Albatros Expeditions / Polar Latitudes",status:"Followup email",notes:""},
-  {id:2,name:"John Mckeon",company:"Albatros Expeditions / Polar Latitudes",status:"Followup email",notes:""},
-  {id:3,name:"Sergi Font Manzano",company:"Amangati Cruise Line",status:"Declined",notes:"His flight is scheduled to land that same day. I asked if there was someone else we could invite, but none of his team will be able to attend."},
-  {id:4,name:"Jinita Thakker",company:"Aman at Sea",status:"Pending",notes:""},
-  {id:5,name:"Laura Vlad",company:"Aman at Sea",status:"Declined",notes:""},
-  {id:7,name:"Michael Pawlus",company:"Azamara",status:"Followup email",notes:""},
-  {id:8,name:"Maudrid Urdaneta",company:"Azamara",status:"Declined",notes:"Conflict with another event"},
-  {id:9,name:"Shandra",company:"Azamara",status:"Tentative",notes:"\" I am just trying to switch another meeting around and if I can make it, I will be sure to let you know asap.\""},
-  {id:10,name:"Gianluca Canepa",company:"AIDA",status:"Pending",notes:""},
-  {id:11,name:"Ugo Savino",company:"Carnival Holding",status:"Tentative",notes:""},
-  {id:12,name:"Jack Brooke",company:"Carnival UK Group",status:"Declined",notes:"He won't be able to attend but he asked for the materials"},
-  {id:14,name:"Daniele Chiappa",company:"Crystal Cruises",status:"Pending",notes:""},
-  {id:15,name:"Vincenzo Pacile",company:"Crystal Cruises",status:"Pending",notes:"Daniele +1"},
-  {id:16,name:"Adria Bono, Director Destination Experience",company:"Crystal Cruises",status:"Followup email",notes:""},
-  {id:17,name:"Simone Maraschi",company:"Cruise Gate Hamburg",status:"Pending",notes:""},
-  {id:18,name:"Barbara Buczek",company:"Cruise Saudi",status:"Pending",notes:""},
-  {id:19,name:"Francesco Di Palma",company:"Explora Journeys (MSC Group)",status:"Followup email",notes:""},
-  {id:20,name:"Catello Miniero",company:"MSC Cruises",status:"Pending",notes:""},
-  {id:21,name:"Sabrina Gaggia",company:"Four Seasons Yachts",status:"Declined",notes:"Forward de Francesco Di Palma. She forwarded this to our port opps team and they will reach out if they are available."},
-  {id:22,name:"Francesco Rossiello",company:"Four Seasons Yachts",status:"Followup email",notes:""},
-  {id:23,name:"James Cabello",company:"Four Seasons Yachts",status:"Pending",notes:""},
-  {id:24,name:"Mariana Elejalde",company:"Four Seasons Yachts",status:"Pending",notes:""},
-  {id:25,name:"Michael Koster",company:"Four Seasons Yachts",status:"Pending",notes:""},
-  {id:26,name:"Dawn Pender",company:"Four Seasons Yachts",status:"Pending",notes:""},
-  {id:27,name:"Srdan Preljevic",company:"Grand Circle Cruise Line / OAT Travel",status:"Declined",notes:"Not attending Seatrade. Asked him if someone else is attending to extend them the invite: \"Unfortunately, nobody from GCCL will be there this time.\""},
-  {id:28,name:"Gerry Larsson-Fedde",company:"Hurtigruten Expeditions",status:"Pending",notes:""},
-  {id:30,name:"Paul Mildon",company:"Noble Caledonia",status:"Tentative",notes:"Still arranging travel plans"},
-  {id:31,name:"Matthew Weintraub",company:"Norwegian Cruise Line",status:"Declined",notes:"Prior engagement at that time and will not be able to join. Asked him is there anyone else he would like us to invite"},
-  {id:32,name:"Sandi Weir",company:"Regent Cruises",status:"Pending",notes:""},
-  {id:33,name:"Brian Gilroy",company:"Oceania Cruises",status:"Followup email",notes:""},
-  {id:35,name:"Sylviane De Tracy",company:"Ponant",status:"Followup email",notes:""},
-  {id:36,name:"German Amaya, Deployment & Itinerary Planning",company:"Ponant",status:"Declined",notes:"Will not be attending Seatrade"},
-  {id:37,name:"Yann Couessurel",company:"Ponant",status:"Followup email",notes:""},
-  {id:38,name:"Debbie Holbrook",company:"Princess Cruises",status:"Pending",notes:"Asked if her colleague Kyle Dunst can also join"},
-  {id:39,name:"Kyle Dunst",company:"Princess Cruises",status:"Pending",notes:""},
-  {id:40,name:"Felix Nacken, Product Management & Itinerary Planning Manager",company:"Phoenix Reisen",status:"No Status",notes:"Message blocked"},
-  {id:41,name:"Rose Serim",company:"RCCL Group",status:"Pending",notes:""},
-  {id:42,name:"Alessandro Carollo",company:"RCCL Group",status:"Pending",notes:""},
-  {id:43,name:"Nicole Rosso",company:"RCCL Group",status:"Pending",notes:""},
-  {id:44,name:"Tuula Aer, Head of Marine Standards",company:"Saga Cruises",status:"No Status",notes:"\"I am travelling on Discovery with limited email access. Will reply as soon as possible.\""},
-  {id:45,name:"Ana BalHanas",company:"Scenic Cruises",status:"Followup email",notes:""},
-  {id:46,name:"Cathrin Meyer",company:"Sea Cloud Cruises",status:"Declined",notes:"Team not attending Seatrade"},
-  {id:47,name:"Crystal Morgan",company:"Seabourn Cruise Line",status:"Pending",notes:""},
-  {id:48,name:"Jeff Shieh, Manager Deployment and Planning",company:"Seabourn Cruise Line",status:"Pending",notes:""},
-  {id:49,name:"Emilio Freeman",company:"SeaDream Yacht Club",status:"Pending",notes:""},
-  {id:50,name:"Marilisa Giannessi",company:"Silversea Cruises",status:"Pending",notes:""},
-  {id:51,name:"Andrea Ferla",company:"Silversea Cruises",status:"Pending",notes:""},
-  {id:52,name:"Serena Colluto",company:"Silversea Cruises",status:"Pending",notes:""},
-  {id:53,name:"Marco Lazzari",company:"Star Clippers",status:"Declined",notes:"(Aleksander) His flight is scheduled to land that same day."},
-  {id:54,name:"Tyler Parker",company:"The Ritz-Carlton Yacht Collection",status:"Followup email",notes:"No longer works with the company. Sent email to \"whom it may concern\". Sent email to Robert"},
-  {id:55,name:"Daniela Sordi",company:"The Ritz-Carlton Yacht Collection",status:"Declined",notes:"Arriving at the end of day on the 12th"},
-  {id:56,name:"Antoine Zoppi",company:"The Ritz-Carlton Yacht Collection",status:"Declined",notes:"he doesn’t arrive on time for the event but we’ll send him the information."},
-  {id:57,name:"Spyros Almpertis",company:"The Ritz-Carlton Yacht Collection",status:"Declined",notes:"Arriving at the end of day on the 12th"},
-  {id:58,name:"Otto van der Westhuizen",company:"The World",status:"Pending",notes:""},
-  {id:59,name:"Panos Thermogiannis",company:"Variety Cruises",status:"Followup email",notes:""},
-  {id:60,name:"Stefano Torresi",company:"Viking Ocean Cruises",status:"Tentative",notes:"Pending – arranging travel plans. Asked if he could bring his colleague Natalia De Freitas"},
-  {id:61,name:"Natalia De Freitas",company:"Windstar Cruises",status:"Tentative",notes:""},
-  {id:62,name:"Alex Zeitz",company:"Windstar Cruises",status:"Followup email",notes:""},
-  {id:63,name:"Jamie Holmes",company:"Virgin Voyages",status:"Followup email",notes:""},
-  {id:64,name:"Melissa Witsoe",company:"Windstar Cruises",status:"Pending",notes:""},
-  {id:65,name:"Paul Chapple",company:"Windstar Cruises",status:"Tentative",notes:"Pending – arranging travel plans"},
-  {id:66,name:"Janet Brava",company:"Windstar Cruises",status:"Pending",notes:"\"Will attend plus 1\""},
-  {id:67,name:"Luigi Bava (Janet Brava's +1)",company:"Windstar Cruises Guest",status:"Pending",notes:""},
-  {id:68,name:"Patricia Gonzalez",company:"Windstar Cruises",status:"Followup email",notes:""},
-  {id:69,name:"Juan Kuryla",company:"NCL Holding",status:"Followup email",notes:""},
-  {id:70,name:"Hans Lind, Director Itinerary Planning",company:"NCL Holding",status:"Declined",notes:""},
-  {id:71,name:"Philippe Mercet",company:"Club Med",status:"Declined",notes:"Arriving to Miami on the evening of April 13th"},
-  {id:72,name:"Saida Dridi",company:"Club Med",status:"Declined",notes:"arriving in Miami on the 13th"},
-  {id:73,name:"Jean-Charles Thillays, Cruise Director",company:"Club Med",status:"Declined",notes:"arriving in Miami on the 13th"},
-  {id:74,name:"Theodora Riga",company:"MedCruise",status:"Pending",notes:""},
-  {id:75,name:"Nicky Guerrero",company:"MedCruise",status:"Pending",notes:""},
-  {id:76,name:"Anne Marie Spinosi",company:"MedCruise",status:"Pending",notes:""},
-  {id:77,name:"Lasse Roebers",company:"HX Expeditions",status:"Declined",notes:"Won't attend Seatrade"},
-  {id:78,name:"Andrea Baigorria",company:"The Tourism Lab",status:"Pending",notes:""},
-  {id:79,name:"Lara Aldunate",company:"The Tourism Lab",status:"Pending",notes:""},
-  {id:80,name:"Shannon McKee",company:"Access Cruise",status:"Pending",notes:""},
-  {id:81,name:"Roger Blum",company:"Cruise and Port Advisors",status:"Pending",notes:""},
-  {id:82,name:"Mary Bond",company:"Seatrade Cruise News",status:"Tentative",notes:"\"add my name to the acceptance list and I will do my very best to pop by\""},
-  {id:83,name:"Holly Payne",company:"Seatrade Cruise News",status:"Pending",notes:""},
-  {id:84,name:"Chiara Giorgi",company:"Seatrade Cruise News",status:"Tentative",notes:"\"I will do my best to be there,  will likely depend on how everything goes onsite during build up.\""},
-  {id:85,name:"Sarah Dandashy",company:"Ask A Concierge",status:"Pending",notes:""},
-  {id:86,name:"Virginia Lopez Valiente",company:"Cruises News",status:"Pending",notes:""},
-  {id:87,name:"Cristina Lopez",company:"Cruises News",status:"Pending",notes:""},
-  {id:88,name:"Frances Gannon",company:"Cruise Times",status:"Pending",notes:""},
-  {id:89,name:"Kieran Gannon",company:"Cruise Times",status:"Pending",notes:""},
-  {id:90,name:"Janette Reddel",company:"Medov",status:"Pending",notes:""},
-  {id:91,name:"Barbara Carabetti",company:"Cemar / Discover",status:"Pending",notes:"*She asked if their president Sergio Senesi was invited"},
-  {id:92,name:"Sergio Senesi",company:"Cemar",status:"Pending",notes:"Maria Cristiana said he will be joining us"},
-  {id:93,name:"Ivan Morini",company:"Trumpy",status:"Pending",notes:"\"He will reply confirming 4 people\""},
-  {id:94,name:"Eugenio K",company:"Trumpy",status:"Pending",notes:"Plus 1, his son"},
-  {id:95,name:"Johannes Kielland",company:"Trumpy",status:"Pending",notes:""},
-  {id:96,name:"Stefano Iannelli",company:"Trumpy",status:"Pending",notes:""},
-  {id:97,name:"Antonio Aloschi",company:"Aloschi Bros",status:"Pending",notes:""},
-  {id:98,name:"Francesco Olivetti",company:"Bassani Group",status:"Followup email",notes:""},
-  {id:99,name:"Anna Rita Secchi",company:"Deputy Minister of Infrastructures and Transport",status:"Pending",notes:""},
-  {id:100,name:"Maria Francesca Amoruso",company:"Ministry of Infrastructures and Transport",status:"Pending",notes:""},
-  {id:101,name:"Giuseppe Amoruso",company:"Minister of Infrastructures and Transport",status:"Pending",notes:""},
-  {id:102,name:"Giovanni Gugliotti",company:"Ministry of Infrastructures and Transport",status:"Pending",notes:""},
-  {id:103,name:"Laura Cimaglia",company:"Ministry of Infrastructures and Transport",status:"Pending",notes:""},
-  {id:104,name:"Camilla Cimaglia",company:"Ministry of Infrastructures and Transport",status:"Pending",notes:""},
-  {id:105,name:"Camilla Cavallaro",company:"President of the Ports of Naples and Salerno",status:"Pending",notes:""},
-  {id:106,name:"Noemi Frascella",company:"Ports of Naples and Salerno",status:"Pending",notes:""},
-  {id:107,name:"Cristiana Laura",company:"Government Guest",status:"Pending",notes:""},
-  {id:108,name:"Giuseppe di Filippo",company:"Global Ports Holding",status:"Pending",notes:""},
-  {id:109,name:"Giuseppe di Filippo +1",company:"Global Ports Holding",status:"Pending",notes:""},
-  {id:110,name:"Edoardo Rixi",company:"Ministry of Infrastructures and Transport",status:"Declined",notes:"Will not be in Miami"},
-  {id:111,name:"Senator Salvini Matteo",company:"Government Guest",status:"Followup email",notes:""},
-  {id:112,name:"Donato Liguori",company:"Ministry of Infrastructures and Transport",status:"Followup email",notes:""},
-  {id:113,name:"Eliseo Cuccaro",company:"Guest",status:"Pending",notes:""},
-  {id:114,name:"Raffaella Del Prete",company:"Global Ports Holding",status:"Declined",notes:"\"I will continue to learn about this project from what transpires in the press.\""},
-  {id:115,name:"Stephen Xuereb",company:"Global Ports Holding",status:"Followup email",notes:""},
-  {id:116,name:"Kerem Seckin",company:"Global Ports Holding",status:"Pending",notes:""},
-  {id:117,name:"Luigi Derchi",company:"Medov",status:"Pending",notes:""},
-  {id:118,name:"Chiara Cesarini",company:"Medov",status:"Pending",notes:""},
-];
+const guests = [{"id":1,"displayNumber":"4","name":"Jinita Thakker","company":"Aman at Sea","status":"Confirmed","notes":""},{"id":2,"displayNumber":"9","name":"Shandra - Director of product development.","company":"Azamara","status":"Tentative","notes":"\" I am just trying to switch another meeting around and if I can make it, I will be sure to let you know asap.\""},{"id":3,"displayNumber":"10","name":"Gianluca Canepa","company":"AIDA","status":"Confirmed","notes":""},{"id":4,"displayNumber":"11","name":"Ugo Savino","company":"Carnival Holding","status":"Tentative","notes":""},{"id":5,"displayNumber":"14","name":"Daniele Chiappa","company":"Crystal Cruises","status":"Confirmed","notes":""},{"id":6,"displayNumber":"15","name":"Vincenzo Pacile","company":"Crystal Cruises","status":"Confirmed","notes":"Daniele +1"},{"id":7,"displayNumber":"17","name":"Simone Maraschi","company":"Cruise Gate Hamburg","status":"Confirmed","notes":""},{"id":8,"displayNumber":"","name":"Barbara Buczek","company":"Cruise Saudi","status":"Confirmed","notes":""},{"id":9,"displayNumber":"20","name":"Catello Miniero","company":"Explora Journeys (MSC Group)","status":"Confirmed","notes":""},{"id":10,"displayNumber":"23","name":"James Cabello","company":"Four Seasons Yachts","status":"Confirmed","notes":""},{"id":11,"displayNumber":"","name":"Tim Littley","company":"Four Seasons Yachts","status":"Confirmed","notes":"Confirmed by James Cabello"},{"id":12,"displayNumber":"","name":"Deborah Suarez","company":"Four Seasons Yachts","status":"Confirmed","notes":""},{"id":13,"displayNumber":"24","name":"Mariana Elejalde","company":"Four Seasons Yachts","status":"Confirmed","notes":""},{"id":14,"displayNumber":"25","name":"Michael Koster","company":"Four Seasons Yachts","status":"Confirmed","notes":""},{"id":15,"displayNumber":"26","name":"Dawn Pender","company":"Four Seasons Yachts","status":"Confirmed","notes":""},{"id":16,"displayNumber":"30","name":"Paul Mildon","company":"Noble Caledonia","status":"Tentative","notes":"Still arranging travel plans"},{"id":17,"displayNumber":"32","name":"Sandi Weir","company":"Regent Cruises","status":"Confirmed","notes":""},{"id":18,"displayNumber":"38","name":"Debbie Holbrook","company":"Princess Cruises","status":"Confirmed","notes":"Asked if her colleague Kyle Dunst can also join"},{"id":19,"displayNumber":"39","name":"Kyle Dunst","company":"Princess Cruises","status":"Confirmed","notes":""},{"id":20,"displayNumber":"41","name":"Rose Serim","company":"RCCL Group","status":"Confirmed","notes":""},{"id":21,"displayNumber":"42","name":"Alessandro Carollo","company":"RCCL Group","status":"Confirmed","notes":""},{"id":22,"displayNumber":"43","name":"Nicole Rosso","company":"RCCL Group","status":"Confirmed","notes":""},{"id":23,"displayNumber":"47","name":"Crystal Morgan","company":"Seabourn Cruise Line","status":"Confirmed","notes":""},{"id":24,"displayNumber":"48","name":"Jeff Shieh, Manager Deployment and Planning from Seabourn","company":"Seabourn Cruise Line","status":"Confirmed","notes":""},{"id":25,"displayNumber":"50","name":"Marilisa Giannessi","company":"Silversea Cruises","status":"Confirmed","notes":""},{"id":26,"displayNumber":"51","name":"Andrea Ferla","company":"Silversea Cruises","status":"Confirmed","notes":""},{"id":27,"displayNumber":"52","name":"Serena Colluto","company":"Silversea Cruises","status":"Confirmed","notes":""},{"id":28,"displayNumber":"","name":"Nicky Ito","company":"The Ritz-Carlton Yacht Collection","status":"Confirmed","notes":"Confirmed by Daniela"},{"id":29,"displayNumber":"","name":"Melissa Hewitt","company":"","status":"Confirmed","notes":""},{"id":30,"displayNumber":"58","name":"Otto van der Westhuizen","company":"The World","status":"Confirmed","notes":""},{"id":31,"displayNumber":"60","name":"Stefano Torresi","company":"Viking Ocean Cruises","status":"Tentative","notes":"Pending - arranging travel plans. Asked if he could bring his colleague Natalia De Freitas"},{"id":32,"displayNumber":"61","name":"Natalia De Freitas","company":"Viking Ocean Cruises","status":"Tentative","notes":""},{"id":33,"displayNumber":"64","name":"Melissa Witsoe","company":"Windstar Cruises","status":"Confirmed","notes":""},{"id":34,"displayNumber":"65","name":"Paul Chapple","company":"Windstar Cruises","status":"Tentative","notes":"Pending - arranging travel plans"},{"id":35,"displayNumber":"66","name":"Janet Brava","company":"Windstar Cruises","status":"Confirmed","notes":"\"Will attend plus 1\""},{"id":36,"displayNumber":"67","name":"Luigi Bava (Janet Brava\u0027s + 1)","company":"","status":"Confirmed","notes":""},{"id":37,"displayNumber":"75","name":"Nicky Guerrero","company":"MedCruise","status":"Confirmed","notes":""},{"id":38,"displayNumber":"76","name":"Anne Marie Spinosi","company":"MedCruise","status":"Confirmed","notes":""},{"id":39,"displayNumber":"","name":"David Shelby","company":"Travel Yield","status":"Tentative","notes":""},{"id":40,"displayNumber":"78","name":"Andrea Baigorria","company":"The Tourism Lab","status":"Confirmed","notes":""},{"id":41,"displayNumber":"79","name":"Lara Aldunate","company":"The Tourism Lab","status":"Confirmed","notes":""},{"id":42,"displayNumber":"80","name":"Shannon McKee","company":"Access Cruise","status":"Confirmed","notes":""},{"id":43,"displayNumber":"81","name":"Roger Blum","company":"Cruise and Port Advisors","status":"Confirmed","notes":""},{"id":44,"displayNumber":"82","name":"Mary Bond","company":"Seatrade Cruise News","status":"Tentative","notes":"\"add my name to the acceptance list and I will do my very best to pop by\""},{"id":45,"displayNumber":"83","name":"Holly Payne","company":"Seatrade Cruise News","status":"Confirmed","notes":""},{"id":46,"displayNumber":"84","name":"Chiara Giorgi","company":"Seatrade Cruise News","status":"Tentative","notes":"\"I will do my best to be there, will likely depend on how everything goes onsite during build up.\""},{"id":47,"displayNumber":"85","name":"Sarah Dandashy","company":"","status":"Confirmed","notes":""},{"id":48,"displayNumber":"86","name":"Virginia Lopez Valiente","company":"Cruises News","status":"Confirmed","notes":""},{"id":49,"displayNumber":"87","name":"Cristina Lopez","company":"Cruises News","status":"Confirmed","notes":""},{"id":50,"displayNumber":"88","name":"Frances Gannon","company":"Cruise Times","status":"Confirmed","notes":""},{"id":51,"displayNumber":"89","name":"Kieran Gannon","company":"Cruise Times","status":"Confirmed","notes":""},{"id":52,"displayNumber":"90","name":"Janette Reddel","company":"Medov","status":"Confirmed","notes":""},{"id":53,"displayNumber":"91","name":"Barbara Carabetti","company":"Cemar/Discover","status":"Confirmed","notes":"*She asked if their president Sergio Senesi was invited"},{"id":54,"displayNumber":"92","name":"Sergio Senesi","company":"","status":"Confirmed","notes":"Maria Cristiana said he will be joining us"},{"id":55,"displayNumber":"94","name":"Eugenio K","company":"Trumpy","status":"Confirmed","notes":"Plus 1, his son"},{"id":56,"displayNumber":"95","name":"Johannes Kielland","company":"Trumpy","status":"Confirmed","notes":""},{"id":57,"displayNumber":"96","name":"Stefano Iannelli","company":"Trumpy","status":"Confirmed","notes":""},{"id":58,"displayNumber":"97","name":"Antonio Aloschi","company":"Aloschi Bros","status":"Confirmed","notes":""},{"id":59,"displayNumber":"99","name":"Anna Rita Secchi","company":"","status":"Confirmed","notes":""},{"id":60,"displayNumber":"100","name":"Maria Francesca Amoruso","company":"","status":"Confirmed","notes":""},{"id":61,"displayNumber":"101","name":"Giuseppe Amoruso","company":"","status":"Confirmed","notes":""},{"id":62,"displayNumber":"102","name":"Giovanni Gugliotti","company":"","status":"Confirmed","notes":""},{"id":63,"displayNumber":"103","name":"Laura Cimaglia","company":"","status":"Confirmed","notes":""},{"id":64,"displayNumber":"104","name":"Camilla Cimaglia","company":"","status":"Confirmed","notes":""},{"id":65,"displayNumber":"105","name":"Camilla Cavallaro","company":"","status":"Confirmed","notes":""},{"id":66,"displayNumber":"106","name":"Noemi Frascella","company":"","status":"Confirmed","notes":""},{"id":67,"displayNumber":"107","name":"Cristiana Laura","company":"","status":"Confirmed","notes":""},{"id":68,"displayNumber":"108","name":"Giuseppe di Filippo","company":"","status":"Confirmed","notes":""},{"id":69,"displayNumber":"109","name":"Giuseppe di Filippo +1","company":"","status":"Confirmed","notes":""},{"id":70,"displayNumber":"113","name":"Eliseo Cuccaro","company":"President of the ports of Naples and Salerno","status":"Confirmed","notes":""},{"id":71,"displayNumber":"116","name":"Kerem Seckin","company":"","status":"Confirmed","notes":""},{"id":72,"displayNumber":"117","name":"Luigi Derchi","company":"","status":"Confirmed","notes":""},{"id":73,"displayNumber":"118","name":"Chiara Cesarini","company":"","status":"Confirmed","notes":""}];
 
-const guestStorageKey = 'magna-graecia-guests-v2';
-const guestStatusOptions = ['Pending', 'In', 'Declined', 'Tentative', 'Followup email', 'No Status'];
+const guestStorageKey = 'magna-graecia-guests-v3';
+const guestStatusOptions = ['Confirmed', 'In', 'Tentative', 'Declined', 'Followup email', 'No Status'];
 let activeFilter = 'all';
 let searchQuery = '';
 
@@ -1587,12 +1472,12 @@ function isGuestCheckedIn(guest) {
 }
 
 function canCheckInGuest(guest) {
-  return guest.status === 'Pending' || guest.status === 'In';
+  return guest.status === 'Confirmed' || guest.status === 'In';
 }
 
 function getGuestStatusBadgeClass(status) {
   if (status === 'In') return 'badge-checked';
-  if (status === 'Pending') return 'badge-pending';
+  if (status === 'Confirmed') return 'badge-pending';
   if (status === 'Declined') return 'badge-declined';
   if (status === 'Tentative') return 'badge-tentative';
   if (status === 'Followup email') return 'badge-followup';
@@ -1630,7 +1515,7 @@ function renderGuests() {
     const matchSearch = !searchQuery || haystack.includes(searchQuery);
     let matchFilter = true;
     if (activeFilter === 'checked') matchFilter = isGuestCheckedIn(guest);
-    if (activeFilter === 'pending') matchFilter = guest.status === 'Pending';
+    if (activeFilter === 'confirmed') matchFilter = guest.status === 'Confirmed';
     return matchSearch && matchFilter;
   });
   if (filtered.length === 0) {
@@ -1641,7 +1526,7 @@ function renderGuests() {
     const checkedIn = isGuestCheckedIn(guest);
     const canCheckIn = canCheckInGuest(guest);
     return       '<tr class="' + (checkedIn ? 'checked-in' : '') + '" data-id="' + guest.id + '">' +
-        '<td><span class="guest-num">' + guest.id + '</span></td>' +
+        '<td><span class="guest-num">' + escapeHtml(guest.displayNumber || String(guest.id)) + '</span></td>' +
         '<td><div class="guest-name">' + escapeHtml(guest.name) + '</div></td>' +
         '<td><div class="guest-detail">' + escapeHtml(guest.company || 'Guest') + '</div></td>' +
         '<td class="guest-notes-cell">' +
@@ -1666,11 +1551,11 @@ function renderGuests() {
 function toggleCheckin(id) {
   const guest = guests.find(item => item.id === id);
   if (!guest || !canCheckInGuest(guest)) return;
-  guest.status = guest.status === 'In' ? 'Pending' : 'In';
+  guest.status = guest.status === 'In' ? 'Confirmed' : 'In';
   persistGuests();
   renderGuests();
   updateKPIs();
-  showToast(guest.status === 'In' ? 'Check-in recorded for ' + guest.name : guest.name + ' moved back to pending', guest.status === 'In' ? 'success' : 'warning');
+  showToast(guest.status === 'In' ? 'Check-in recorded for ' + guest.name : guest.name + ' moved back to confirmed', guest.status === 'In' ? 'success' : 'warning');
 }
 
 function updateKPIs() {
